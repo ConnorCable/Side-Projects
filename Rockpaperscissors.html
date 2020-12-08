@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .text {
+        margin: auto;
+        padding: 100px;
+        background-color: white;
+        text-align: center;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: horizontal;
+        width: 300px;
+        height: 40px;
+        background-color: #fcba03;
+        position: absolute;
+        top: 0;
+        bottom: 50vh;
+        left: 0;
+        right: 0;
+        margin: auto;
+        justify-content: center;
+    }
+
+    button {
+        display: inline-block;
+        text-align: center;
+        padding: 15px;
+        background-color: white;
+
+    }
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="text" id="text">
+        Welcome to Rock Paper Scissors!
+    </div>
+    <div id="counter">
+
+    </div>
+    <div class="buttons">
+        <button onclick="game('rock')"> Rock </button>
+        <button onclick="game('paper')"> Paper </button>
+        <button onclick="game('scissors')"> Scissors </button>
+    </div>
+
+    <script>
+        let wins = 0
+        let losses = 0
+        var player_choice = ""
+        var comp_choice = ""
+        let game_text = document.getElementById("text")
+        let counter = document.getElementById("counter")
+
+        function incrementer(match) {
+            if (match == "true") {
+                game_text.innerHTML = " You win!"
+                console.log("win")
+                wins += 1
+            }
+            if (match == "false") {
+                game_text.innerHTML = "You lose!"
+                console.log("lose")
+                losses += 1
+            }
+            if (match == "tie") {
+                game_text.innerHTML = "It's a tie!"
+                console.log("tie")
+            }
+
+        }
+
+        function winfunc() {
+            if (wins == 5) {
+                game_text.innerHTML = "You win the match!"
+                console.log("winmatch")
+                wins = 0
+                losses = 0
+            }
+            if (losses == 5) {
+                game_text.innerHTML = "You lose the match!"
+                console.log("losematch")
+                wins = 0
+                losses = 0
+            }
+        }
+
+        function comp_chooser() {
+            console.log("Comp_chooser activated")
+            temp = Math.floor(Math.random() * (3))
+            console.log(`${temp} was randomized`)
+            if (temp == 0) {
+                comp_choice = "rock"
+            }
+            if (temp == 1) {
+                comp_choice = "paper"
+            }
+            if (temp == 2) {
+                comp_choice = "scissors"
+            }
+            console.log(`${comp_choice} was chosen`)
+        }
+
+        function checker() {
+            if (player_choice == "rock") {
+                if (comp_choice == "paper") {
+                    incrementer("false")
+                }
+                if (comp_choice == "scissors") {
+                    incrementer("true")
+                }
+                if (comp_choice == "rock") {
+                    incrementer("tie")
+                }
+            }
+
+            if (player_choice == "paper") {
+                if (comp_choice == "scissors") {
+                    incrementer("false")
+                }
+                if (comp_choice == " rock") {
+                    incrementer("true")
+                }
+                if (comp_choice == "scissors") {
+                    incrementer("tie")
+                }
+            }
+
+            if (player_choice == "scissors") {
+                if (comp_choice == "scissors") {
+                    incrementer("tie")
+                }
+                if (comp_choice == " rock") {
+                    incrementer("false")
+                }
+                if (comp_choice == "scissors") {
+                    incrementer("true")
+                }
+            }
+        }
+
+        function game(choice) {
+            player_choice = choice
+            console.log(`${choice} was pressed , computer is ${game_text.innerHTML}`)
+            comp_chooser()
+            checker()
+            counter.innerHTML = `${wins} wins and ${losses} loss(es)`
+            winfunc()
+        }
+    </script>
+</body>
+
+</html>

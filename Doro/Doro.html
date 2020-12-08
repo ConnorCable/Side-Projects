@@ -1,0 +1,136 @@
+    <html>
+
+    <head>
+        <style>
+            .container {
+                display: flex;
+                flex-direction: column;
+                background-image: linear-gradient(to bottom, #c5bbb0, black); 
+                height: 100%;
+                margin: 0;
+                align-items: center;
+            }
+
+            .title {
+                font-size: 30px;
+            }
+
+            p {
+                font-size: 5vw;
+                font-family: Lucida Console;
+            }
+
+            .timer {
+                font-size: 11vw;
+                display: inline-block;
+                color: black;
+
+                
+            }
+
+            .buttons {
+                display: flex;
+                flex-direction: row;
+
+            }
+
+            button {
+                border-radius: 1px;
+                box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                padding: 15px 32px;
+                font-size: 18px;
+            }
+
+            hr {
+                border: 0;
+                clear:both;
+                display:block;
+                width: 50% ;               
+                background-color: black;
+                height: 1px;
+                }   
+        </style>
+    </head>
+
+    <body>
+        <title> A Pomodoro Timer </title>
+        <div class="container">
+            <p>
+                Doro
+            </p>
+            <div class="timer" id="timer">
+            25:00
+            </div>
+            <div class="buttons">
+                <button style="background-color: #8acf92", onclick="start()"> Start </button>
+                <button style="background-color: #a11b12 ", onclick="stop()"> Stop </button>
+                <button style="background-color: #dce670 ", onclick="reset()"> Reset </button>
+            </div>
+            <hr>
+            <div id = "doroCounter">
+                You have completed 0 Doros
+            </div>
+        </div>
+    <script>
+        var sec = 1500,
+            count = document.getElementById("timer"), 
+            secpass,
+            countdown
+            getCompleted = document.getElementById("doroCounter")
+
+        let timer_ready = true,
+            completed = 0
+
+            function secpass(){
+                'use strict'
+                var min = Math.floor(sec / 60)
+                var remsec = sec % 60
+                // add an '0' to the counter if the mins or secs are less than 10
+                if (remsec < 10){
+                    remsec = '0' + remsec
+                }
+                if (min < 10){
+                    min = '0' + min
+                }
+
+                count.innerHTML = min + ":" + remsec
+                // count down the timer
+                if (sec > 1){
+                    sec = sec - 1
+
+                }
+                else {
+                    clearInterval(countdown)
+                    count.innerHTML = "Pomodoro Complete"
+                    getCompleted.innerHTML = `You have completed ${completed} Doros`
+                    timer_ready = false
+                }
+            }
+
+            function start(){
+                if (timer_ready){
+                    countdown = clearInterval(countdown)
+                    console.log("Start Pressed")
+                    countdown = setInterval(function() {
+                        'use strict'
+                        secpass()
+                    }   ,1000)
+            timer_ready = false
+            }}
+
+            function reset(){
+                console.log("Reset Pressed")
+                sec = 1500
+                secpass()
+                stop() 
+                timer_ready = true
+            }
+
+            function stop(){
+                console.log("Stop pressed")
+                countdown = clearInterval(countdown)
+                timer_ready = true
+            }
+    </script>
+    </body>
+    </html>
